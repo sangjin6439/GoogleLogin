@@ -1,9 +1,8 @@
-package com.gdsc.glogintest.config;
+package com.gdsc.glogintest.jwt;
 
-import com.gdsc.glogintest.JwtFilter;
-import com.gdsc.glogintest.TokenProvider;
+import com.gdsc.glogintest.jwt.JwtFilter;
+import com.gdsc.glogintest.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.file.ConfigurationSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

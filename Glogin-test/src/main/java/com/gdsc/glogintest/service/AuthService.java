@@ -1,6 +1,6 @@
 package com.gdsc.glogintest.service;
 
-import com.gdsc.glogintest.TokenProvider;
+import com.gdsc.glogintest.jwt.TokenProvider;
 import com.gdsc.glogintest.domain.Role;
 import com.gdsc.glogintest.domain.User;
 import com.gdsc.glogintest.dto.Token;

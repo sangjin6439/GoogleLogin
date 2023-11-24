@@ -1,4 +1,4 @@
-package com.gdsc.glogintest;
+package com.gdsc.glogintest.jwt;
 
 import com.gdsc.glogintest.domain.User;
 import com.gdsc.glogintest.dto.Token;
