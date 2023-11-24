@@ -8,12 +8,15 @@ import com.gdsc.glogintest.dto.UserInfo;
 import com.gdsc.glogintest.repository.UserRepository;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -21,8 +24,13 @@ import java.util.Map;
 public class AuthService {
 
     private final String GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
-    private final String GOOGLE_CLIENT_ID = "850878982507-km11erjtkjb67cadh3aih6e693nceaqo.apps.googleusercontent.com";
-    private final String GOOGLE_CLIENT_SECRET = "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";
+
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    private String GOOGLE_CLIENT_ID;
+
+    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    private String GOOGLE_CLIENT_SECRET;
+
     private final String GOOGLE_REDIRECT_URI = "http://localhost:8080/api/oauth2/callback/google";
 
     private final UserRepository userRepository;
@@ -31,14 +39,13 @@ public class AuthService {
 
     public String getGoogleAccessToken(String code) {
         RestTemplate restTemplate = new RestTemplate();
-        Map<String, String> params = Map.of(
-                "code", code,
-                "scope", "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
-                "client_id", GOOGLE_CLIENT_ID,
-                "client_secret", GOOGLE_CLIENT_SECRET,
-                "redirect_uri", GOOGLE_REDIRECT_URI,
-                "grant_type", "authorization_code"
-        );
+        Map<String, String> params = new HashMap<>();
+        params.put("code", code);
+        params.put("scope", "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email");
+        params.put("client_id", GOOGLE_CLIENT_ID);
+        params.put("client_secret", GOOGLE_CLIENT_SECRET);
+        params.put("redirect_uri", GOOGLE_REDIRECT_URI);
+        params.put("grant_type", "authorization_code");
 
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(GOOGLE_TOKEN_URL, params, String.class);
 
